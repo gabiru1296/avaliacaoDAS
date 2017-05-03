@@ -14,7 +14,17 @@ public class PriceCalculator {
 
 	public float compute() {
 
-        if (this.acesso.horaSaida == this.acesso.horaEntrada) {
+		this.defineParkingTime();
+		this.computePrice();
+
+		if (quantidadeHoras >=9)
+			return this.acesso.VALOR_DIARIA;
+		else
+			return valorTotal;
+	}
+
+	private void defineParkingTime() {
+		if (this.acesso.horaSaida == this.acesso.horaEntrada) {
 			quantidadeMinutos = this.acesso.minutosSaida - this.acesso.minutosEntrada;
 		}
 		else if (this.acesso.horaSaida > this.acesso.horaEntrada && this.acesso.minutosEntrada == this.acesso.minutosSaida) {
@@ -31,13 +41,10 @@ public class PriceCalculator {
 			quantidadeHoras = 0;
 			quantidadeMinutos = 0;
 		}
+	}
 
-        valorTotal += quantidadeHoras * this.acesso.VALOR_HORA;
+	private void computePrice() {
+		valorTotal += quantidadeHoras * this.acesso.VALOR_HORA;
 		valorTotal += Math.ceil(quantidadeMinutos / 15.0) * this.acesso.VALOR_FRACAO;
-
-		if (quantidadeHoras >=9)
-			return this.acesso.VALOR_DIARIA;
-		else
-			return valorTotal;
 	}
 }
