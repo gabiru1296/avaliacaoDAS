@@ -13,7 +13,6 @@ public class Acesso {
 			   minutosSaida;
 
 
-
 	public Acesso() {}
 
 
@@ -27,41 +26,7 @@ public class Acesso {
 
 
 	public float calcularValor() {
-		final int quantidadeHoras;
-		final int quantidadeMinutos;
-
-		// Sequencia lógica de if e else, ou seja, cada variavel temporária
-		// será inicializada apenas uma vez. Não mudando de valor com o tempo.
-		if (horaSaida == horaEntrada) {
-			quantidadeHoras = horaSaida - horaEntrada;
-			quantidadeMinutos = minutosSaida - minutosEntrada;
-		}
-		else if (horaSaida > horaEntrada && minutosEntrada == minutosSaida) {
-			quantidadeHoras = horaSaida - horaEntrada;
-			quantidadeMinutos = 0;
-		}
-		else if (horaSaida > horaEntrada && minutosEntrada > minutosSaida) {
-			quantidadeHoras = horaSaida - horaEntrada;
-			quantidadeMinutos = minutosSaida - minutosEntrada;
-		}
-		else if (horaSaida > horaEntrada && minutosSaida < minutosEntrada){
-			quantidadeHoras = horaSaida - horaEntrada - 1;
-			quantidadeMinutos = minutosSaida + (60 - minutosEntrada);
-		}
-		else {
-			quantidadeHoras = 0;
-			quantidadeMinutos = 0;
-		}
-
-		// somatório não precisa aplicar Dividir variável
-		float valorTotal = 0;
-		valorTotal += quantidadeHoras * VALOR_HORA;
-		valorTotal += Math.ceil(quantidadeMinutos / 15.0) * VALOR_FRACAO;
-
-		if (quantidadeHoras >=9)
-			return VALOR_DIARIA;
-		else
-			return valorTotal;
+		return new PriceCalculator(this, horaSaida - horaEntrada, 0, 0).compute();
 	}
 
 
